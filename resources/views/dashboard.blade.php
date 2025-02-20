@@ -1,17 +1,25 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+@extends('include.master')
+@section('content')
+    <main class="main-content">
+        <div class="card stats-card">
+            <h3>Total Songs</h3>
+            <h2 style="color: var(--primary-red);">15,432</h2>
+            <p>↑ 12% from last month</p>
         </div>
-    </div>
-</x-app-layout>
+        <div class="card stats-card">
+            <h3>Active Users</h3>
+            <h2 style="color: var(--primary-yellow);">45,231</h2>
+            <p>↑ 8% from last week</p>
+        </div>
+        <div class="card stats-card">
+            <h3>Revenue</h3>
+            <h2 style="color: var(--primary-red);">$12,450</h2>
+            <p>↓ 3% from last month</p>
+        </div>
+        <div class="chart-container">
+            <!-- Add your chart here -->
+            <h3>Monthly Analytics</h3>
+            <canvas id="analyticsChart"></canvas>
+        </div>
+    </main>
+@endsection

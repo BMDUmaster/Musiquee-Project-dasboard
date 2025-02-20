@@ -111,6 +111,14 @@
         button:active {
             transform: translateY(0);
         }
+
+        @media print {
+
+            html,
+            body {
+                display: none;
+            }
+        }
     </style>
 </head>
 

@@ -32,54 +32,20 @@ class AuthController extends Controller
 
     public function facebookLogin(Request $request)
     {
-        try {
-            $accessToken = $request->token;
+        $facebookUser = Socialite::driver('facebook')->stateless()->userFromToken($request->token);
 
-            // Validate token presence
-            if (!$accessToken) {
-                return response()->json(['error' => 'Access token is required'], 400);
-            }
-            $appSecret = env('FACEBOOK_CLIENT_SECRET');
-            $appSecretProof = hash_hmac('sha256', $accessToken, $appSecret);
-            $fbResponse = Http::get("https://graph.facebook.com/v17.0/me", [
-                'fields' => 'id,name,email',
-                'access_token' => $accessToken,
-                'appsecret_proof' => $appSecretProof
-            ]);
+        $customer = Customer::updateOrCreate([
+            'email' => $facebookUser->getEmail(),
+        ], [
+            'name' => $facebookUser->getName(),
+            'facebook_id' => $facebookUser->getId(),
+        ]);
+        $token = $customer->createToken('auth_token')->plainTextToken;
 
-            // Check if response is valid
-            if ($fbResponse->failed()) {
-                Log::error('Facebook API error', ['response' => $fbResponse->json()]);
-                return response()->json(['error' => 'Invalid Facebook Token or App Secret'], 401);
-            }
-
-            $facebookUser = $fbResponse->json();
-
-            // Ensure email exists
-            if (!isset($facebookUser['email'])) {
-                return response()->json(['error' => 'Facebook account does not have an email'], 400);
-            }
-
-            // Create or update customer
-            $customer = Customer::updateOrCreate(
-                ['email' => $facebookUser['email']],
-                [
-                    'name' => $facebookUser['name'],
-                    'facebook_id' => $facebookUser['id']
-                ]
-            );
-
-            // Generate Bearer Token
-            $token = $customer->createToken('auth_token')->plainTextToken;
-
-            return response()->json([
-                'message' => 'User authenticated successfully',
-                'user' => $customer,
-                'token' => $token
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Facebook Login Exception', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Something went wrong. Try again.'], 500);
-        }
+        return response()->json([
+            'message' => 'User authenticated successfully',
+            'user' => $customer,
+            'token' => $token  // Return Bearer Token
+        ]);
     }
 }
