@@ -96,7 +96,7 @@
 @endsection
 @section('content')
     <div class="users-container">
-        <h2 class="mb-4">Musiquee Users</h2>
+        <h2 class="mb-4">Musiquee Users </h2>
         <div class="table-header">
             <div class="date-range-filter">
                 <label for="fromDate">From:</label>

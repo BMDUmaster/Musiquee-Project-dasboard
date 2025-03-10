@@ -12,9 +12,13 @@
         <i class="fas fa-users"></i>
         Users
     </a>
-    <a href="#" class="menu-item">
+    <a href="{{route('addMusic')}}" class="menu-item">
+        <i class="fa-solid fa-icons"></i>
+        Category
+    </a>
+    <a href="{{route('view')}}" class="menu-item">
         <i class="fas fa-chart-bar"></i>
-        Analytics
+        Artist
     </a>
     <a href="#" class="menu-item">
         <i class="fas fa-cog"></i>
