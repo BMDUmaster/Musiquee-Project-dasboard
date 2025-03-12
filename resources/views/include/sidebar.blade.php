@@ -4,11 +4,11 @@
         <i class="fas fa-home"></i>
         Dashboard
     </a>
-    <a href="#" class="menu-item">
+    <a href="{{route('getSong')}}" class="menu-item">
         <i class="fas fa-music"></i>
         Songs
     </a>
-    <a href="#" class="menu-item">
+    <a href="{{route('User.Registration')}}" class="menu-item">
         <i class="fas fa-users"></i>
         Users
     </a>
