@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('BioGraph');
             $table->date('Date');
             $table->json('Socialmedia');
+            $table->string('status');
+            $table->string('Action');
             $table->timestamps();
         });
     }

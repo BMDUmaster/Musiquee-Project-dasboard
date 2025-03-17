@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();;
             $table->string('Password');
             $table->string('file');
+            $table->string('status');
+            $table->string('Action');
             $table->timestamps();
         });
     }

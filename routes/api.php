@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\API\RegistrationAPI;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/google', [AuthController::class, 'googleLogin']);
 Route::post('/auth/facebook', [AuthController::class, 'facebookLogin']);
 
+Route::post('/API/Register',[RegistrationAPI::class,'APIRegister']);
+Route::post('/login', [RegistrationAPI::class, 'loginApi']);
+Route::post('/logout', [RegistrationAPI::class, 'logout'])->middleware('auth:sanctum');

@@ -99,10 +99,10 @@
             <tbody>
                 @foreach($categories as $key => $category)
                 <tr>
-                    <td>{{ $categories->firstItem()+$key+1 }}</td>
+                    <td>{{ $categories->firstItem()+$key }}</td>
 
                     <td>{{ $category->name }}</td>
-                    <td><img src="{{ asset('category_images/' . $category->categaury_image) }}" width="50"></td>
+                    <td><img src="{{ asset('CategouryImage/'.$category->categaury_image) }}" width="50"></td>
                     <td>{{ $category->status }}</td>
                     <td class="d-flex justify-content-center align-items-center gap-3">
                         <!-- Edit Button -->

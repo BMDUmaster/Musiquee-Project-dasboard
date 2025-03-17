@@ -21,16 +21,15 @@ class MusicController extends Controller
            'status'=>'required',
 
         ]);
-
-        $getImage = $request->file('category_image');
-        $getNewName = time().'.'.$getImage->getClientOriginalExtension();
-        $getImage->storeAs('category_images', $getNewName, 'public');
-
-
+        if($request->hasFile('category_image')){
+            $getfile = $request->category_image;
+            $changename = time().'.'.$getfile->getClientOriginalExtension();
+            $getfile->move(public_path('CategouryImage'), $changename);
+          }
 
         $model = new Music();
         $model->name = $request->category_name;
-        $model->categaury_image =$getImage;
+        $model->categaury_image =$changename;
         $model->status = $request->status;
         $model->save();
         return redirect()->back()->with('success','Your post is uploaded successfully');

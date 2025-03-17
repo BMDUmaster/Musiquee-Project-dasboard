@@ -6,10 +6,10 @@ use App\Models\artistModel;
 use Illuminate\Http\Request;
 
 class artistController extends Controller
-{
-   public function artist(){
-     $getArtist = artistModel::all();
-    return view('artist',compact('getArtist'));
+   {
+      public function artist(){
+      $getArtist = artistModel::all();
+      return view('artist',compact('getArtist'));
    }
 
 

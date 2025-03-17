@@ -23,7 +23,9 @@ class UserController extends Controller
             'phone'=>'required|max:10|min:10|unique:user_registrations',
             'email'=>'required|email|unique:user_registrations,email',
             'password'=>'required|min:6|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]{2,}).{8,}$/',
-            'profile_image'=>'required|mimes:jpg,png,gif,jpeg|max:2048'
+            'profile_image'=>'required|mimes:jpg,png,gif,jpeg|max:2048',
+            'status'=>'required',
+
         ],[
             'password.required' => 'Password field is required.',
             'password.min' => 'Password must be at least six characters.',
@@ -47,6 +49,7 @@ class UserController extends Controller
         $UserModel->email = $request->email;
         $UserModel->Password = Hash::make($request->password); // 🔥 Fixed Here
         $UserModel->file = $NewFileName;
+        $UserModel->status = $request->status;
         $UserModel->save();
 
         return redirect()->back()->with('success','Your Profile is successfully Updated');

@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api'=>[
+
+            'driver'=>'sanctum',
+            'provider' =>'APIMOdel',
+
+           ],
     ],
 
     /*
@@ -64,6 +70,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'APIMOdel'=>[
+            'driver'=>'eloquent',
+            'model'=> App\Models\APIMOdel::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

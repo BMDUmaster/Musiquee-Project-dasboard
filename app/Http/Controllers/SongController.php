@@ -21,13 +21,13 @@ class SongController extends Controller
       ]);
         if($request->hasFile('music_file')){
           $getfile = $request->music_file;
-          $changename = time().'.'.$getfile->getClientOriginalExtension();
-          $getfile->move(public_path('SongFile'), $changename);
+          $changesongName = time().'.'.$getfile->getClientOriginalExtension();
+          $getfile->move(public_path('SongFile'), $changesongName);
         }
       $songFile = new SongPlay();
       $songFile->songname = $request->song_name;
       $songFile->User_ID	= $request->user_id;
-      $songFile->UploadFile = $changename;
+      $songFile->UploadFile = $changesongName;
       $songFile->categeryID = $request->category_id;
       $songFile->save();
       return redirect()->back()->with('success','File is Upload successfully');
