@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\APIMOdel;
+use App\Models\FollwUpModel;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +13,7 @@ class FollowController extends Controller
 {
     public function getUserData(Request $request){
       $userId = Auth::user();
-    //   $user = APIMOdel::find($userId);
+
       if(! $userId){
         return response()->json([
             'status'=> false,
@@ -24,12 +26,147 @@ class FollowController extends Controller
       if (!$user) {
           return response()->json([
             'status' => false,
-
             'message' => 'User Not Found'
         ], 404);
       }
-
       return response()->json(['status' => true, 'user' => $user]);
   }
 
+
+  public function follow(Request $request)
+  {
+      $user = auth()->guard('api')->user();
+
+      if (!$user) {
+          return response()->json(['message' => 'Unauthorized. Please login.'], 401);
+      }
+
+      $request->validate([
+          'following_id' => 'required|exists:api_registrations,id',
+      ]);
+
+      if ($user->id == $request->following_id) {
+          return response()->json([
+             "status"=>false,
+            'message' => 'You cannot follow yourself.'], 400);
+      }
+
+      $existingFollow = FollwUpModel::where('follower_id', $user->id)
+                                     ->where('following_id', $request->following_id)
+                                     ->exists();
+
+      if ($existingFollow) {
+          return response()->json(
+            [
+                "status"=>false,
+            'message' => 'You are already following this user.'], 409);
+      }
+
+      FollwUpModel::create([
+          'user_id'=>$user->id,
+          'UserName'=>$user->name,
+
+          'follower_id' => $user->id,
+
+          'following_id' => $request->following_id,
+      ]);
+
+      return response()->json([
+        'status'=>true,
+        'message' => 'Successfully followed the user.'], 201);
+  }
+
+
+
+
+  // Unfollow User
+  public function unfollow(Request $request)
+{
+    $user = auth()->user();
+
+    $request->validate([
+        'following_id' => 'required|exists:api_registrations,id',
+    ]);
+
+    $follow = FollwUpModel::where('follower_id', $user->id)
+                           ->where('following_id', $request->following_id)
+                           ->first();
+
+    if (!$follow) {
+        return response()->json(['message' => 'You are not following this user.'], 404);
+    }
+
+    $follow->delete();
+
+    return response()->json(['message' => 'Successfully unfollowed the user.'], 200);
 }
+
+
+
+  public function getFollowersAndFollowing($userId)
+{
+    $followers = FollwUpModel::where('following_id', $userId)
+                              ->with('followerUser')
+                              ->get();
+
+    $following = FollwUpModel::where('follower_id', $userId)
+                              ->with('followingUser')
+                              ->get();
+
+    return response()->json([
+        'followers' => $followers,
+        'following' => $following,
+    ]);
+}
+}
+
+
+
+
+
+
+//login code understand Only use for personal use
+// public function login(Request $request)
+//     {
+//         try {
+//             $validatedData = $request->validate([
+//                 'phone' => 'required|numeric|exists:customers,phone',
+//                 'password' => 'required|min:4',
+//             ]);
+//             $user = Customer::where('phone', $validatedData['phone'])->first();
+//             if (!$user->status) {
+//                 return response()->json([
+//                     'success' => false,
+//                     'message' => 'Your account has been blocked. Please contact support.'
+//                 ], 403);
+//             }
+//             if (!$user || !Hash::check($validatedData['password'], $user->password)) {
+//                 return response()->json([
+//                     'success' => false,
+//                     'message' => 'Invalid credentials'
+//                 ], 401);
+//             }
+//             $token = $user->createToken('UserToken')->plainTextToken;
+//             return response()->json([
+//                 'success' => true,
+//                 'message' => 'Login successful',
+//                 'user' => [
+//                     'id' => $user->id,
+//                     'name' => $user->name,
+//                     'phone' => $user->phone,
+//                 ],
+//                 'token' => $token
+//             ], 200);
+//         } catch (\Illuminate\Validation\ValidationException $e) {
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Validation failed',
+//                 'errors' => $e->errors()
+//             ], 422);
+//         } catch (\Exception $e) {
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Something went wrong',
+//                 'error' => $e->getMessage()
+//             ], 500);
+//         }

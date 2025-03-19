@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\APIMOdel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -17,7 +18,8 @@ class RegistrationAPI extends Controller
    $Validate = Validator::make($request->all(),[
     'name'=>'required',
     'email'=>'required|email|unique:api_registrations',
-    'phone'=>'required|unique:api_registrations|max:10|min:10'
+    'phone'=>'required|unique:api_registrations|max:10|min:10',
+    'password'=>'required|min:5'
    ]);
     if($Validate->fails()){
         return response()->json([
@@ -28,10 +30,13 @@ class RegistrationAPI extends Controller
     }
 
    $User = APIMOdel::create([
-            'name'=>$request->Name,
-            'email'=>$request->Email,
-            'phone'=>$request->Phone,
-            'address'=>$request->Address,
+            // dd('password'),
+
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'password'=>Hash::make($request->password),
 
           ]);
           $token = $User->createToken('authToken')->plainTextToken;
@@ -49,12 +54,12 @@ class RegistrationAPI extends Controller
     $validate = Validator::make($request->all(),[
         'email'=>'required_without:phone|email|exists:api_registrations,email',
         'phone' =>'required_without:email|digits:10|exists:api_registrations,phone',
-
+        'password'=>'required|min:5'
     ]);
   if($validate->fails()){
       return response()->json([
               'status'=>false,
-              'Message'=>'Email Or Password is required',
+              'Message'=>'Email,Phone and  Password is required',
               'Error' => $validate->errors()->first()
       ],401);
   }
@@ -66,6 +71,14 @@ class RegistrationAPI extends Controller
     ], 404);
 }
 
+  if(!$user|| !Hash::check($request->password,$user->password)){
+    return response()->json(
+        [
+            'status'=>false,
+            'password'=>'Invalid Password'
+        ]
+        );
+  }
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([

@@ -13,6 +13,17 @@ class APIMOdel extends Model
     protected $table = 'api_registrations';
 
 
-    protected $fillable = ['name', 'email', 'phone', 'address'];
+    protected $fillable = ['name', 'email', 'phone', 'address','password'];
     protected $hidden = [ 'remember_token'];
+
+    public function followers()
+    {
+        return $this->hasMany(FollwUpModel::class, 'following_id');
+    }
+
+    // Following Relation
+    public function following()
+    {
+        return $this->hasMany(FollwUpModel::class, 'follower_id');
+    }
 }

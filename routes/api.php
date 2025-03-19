@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EditController;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationAPI;
@@ -29,3 +30,8 @@ Route::post('/login', [RegistrationAPI::class, 'loginApi']);
 Route::post('/logout', [RegistrationAPI::class, 'logout'])->middleware('auth:sanctum');
 Route::put('/edit/{id}',[EditController::class,'updateUser']);
 Route::get('/getUser',[FollowController::class,'getUserData'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/follow', [FollowController::class, 'follow']);
+    Route::post('/unfollow', [FollowController::class, 'unfollow']);
+    Route::get('/user/{userId}/followers-following', [FollowController::class, 'getFollowersAndFollowing']);
+});
