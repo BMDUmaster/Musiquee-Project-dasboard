@@ -8,14 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+
+
 class RegistrationAPI extends Controller
 {
+
   public function APIRegister(Request $request){
    $Validate = Validator::make($request->all(),[
-    'Name'=>'required',
-    'Email'=>'required|email|unique:api_registrations',
-    'Phone'=>'required|unique:api_registrations|max:10|min:10'
-
+    'name'=>'required',
+    'email'=>'required|email|unique:api_registrations',
+    'phone'=>'required|unique:api_registrations|max:10|min:10'
    ]);
     if($Validate->fails()){
         return response()->json([
@@ -64,7 +66,7 @@ class RegistrationAPI extends Controller
     ], 404);
 }
 
-$token = $user->createToken('API Token')->plainTextToken;
+        $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
             'status' => true,

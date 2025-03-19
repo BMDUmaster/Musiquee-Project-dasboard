@@ -14,4 +14,5 @@ class APIMOdel extends Model
 
 
     protected $fillable = ['name', 'email', 'phone', 'address'];
+    protected $hidden = [ 'remember_token'];
 }

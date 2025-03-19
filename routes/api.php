@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationAPI;
+use App\Http\Controllers\API\FollowController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,7 +14,7 @@ use App\Http\Controllers\API\RegistrationAPI;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
-|
+
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -25,3 +27,5 @@ Route::post('/auth/facebook', [AuthController::class, 'facebookLogin']);
 Route::post('/API/Register',[RegistrationAPI::class,'APIRegister']);
 Route::post('/login', [RegistrationAPI::class, 'loginApi']);
 Route::post('/logout', [RegistrationAPI::class, 'logout'])->middleware('auth:sanctum');
+Route::put('/edit/{id}',[EditController::class,'updateUser']);
+Route::get('/getUser',[FollowController::class,'getUserData'])->middleware('auth:sanctum');
