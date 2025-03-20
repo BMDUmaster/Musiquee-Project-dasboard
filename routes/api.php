@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationAPI;
 use App\Http\Controllers\API\FollowController;
+use App\Http\Controllers\API\FileUploadController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,4 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/follow', [FollowController::class, 'follow']);
     Route::post('/unfollow', [FollowController::class, 'unfollow']);
     Route::get('/user/{userId}/followers-following', [FollowController::class, 'getFollowersAndFollowing']);
+
 });
+
+Route::post('/song',[FileUploadController::class,'UploadSong']);
