@@ -11,8 +11,6 @@ class artistController extends Controller
       $getArtist = artistModel::all();
       return view('artist',compact('getArtist'));
    }
-
-
    public function artistLogic(Request $request){
 
       $request->validate([

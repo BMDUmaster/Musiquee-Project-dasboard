@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SongUploadAPI extends Model
-{
-    use HasFactory;
-    protected $fillable = [
-        'song_name',
-        'file_path',
-        'song_type',
-    ];
+{    use HasFactory;
+    protected $table = 'song_upload_a_p_i_s';
+
+    protected $fillable = ['SongPath', 'SongType'];
 }

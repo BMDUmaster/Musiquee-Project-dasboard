@@ -11,8 +11,8 @@ class FileUploadController extends Controller
 {
    public function UploadSong(Request $request){
     $validate=Validator::make($request->all(),[
-        'song_type' => 'required|string|in:Pop,Rock,Jazz,Classical,HipHop',
-        'songFile'=>'required|mimesmp3,wav,ogg',
+        'SongType' => 'required|string|in:Pop,Rock,Jazz,Classical,HipHop',
+        'SongPath'=>'required|mimes:mp3,wav,ogg',
     ]);
     if($validate->fails()){
         return response()->json([
@@ -22,15 +22,17 @@ class FileUploadController extends Controller
         ],400);
 
     }
-         if($request->hasFile('songFile')){
-               $getfile = $request->file('songFile');
+
+
+         if($request->hasFile('SongPath')){
+               $getfile = $request->file('SongPath');
                $fileName = time().'_'.$getfile->getClientOriginalName();
                $getfile->move(public_path('MySong'),$fileName);
 
                $song = SongUploadAPI::create([
-                'song_name' => $fileName ,
+                'SongPath' => $fileName ,
 
-                'song_type' => $request->song_type,
+                'SongType' => $request->SongType,
                ]);
                return response()->json([
                 'status'=>true,
@@ -47,4 +49,34 @@ class FileUploadController extends Controller
            ],500);
 
    }
+
+
+
+
+
+
+
+    public function deleteSong($id)
+    {
+        // Find the song by ID
+        $song = SongUploadAPI::find($id);
+
+        if (!$song) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Song not found'
+            ], 404);
+        }
+
+        // Delete the song
+        $song->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Song deleted successfully'
+        ], 200);
+    }
 }
+
+
+
