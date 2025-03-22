@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\SongUploadAPI;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FileUploadController extends Controller
@@ -50,12 +51,6 @@ class FileUploadController extends Controller
 
    }
 
-
-
-
-
-
-
     public function deleteSong($id)
     {
         // Find the song by ID
@@ -76,7 +71,17 @@ class FileUploadController extends Controller
             'message' => 'Song deleted successfully'
         ], 200);
     }
+
 }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -36,12 +36,13 @@ Route::post('/follow', [FollowController::class, 'follow']);
 Route::post('/unfollow', [FollowController::class, 'unfollow']);
 Route::get('/user/{userId}/followers-following', [FollowController::class, 'getFollowersAndFollowing']);
 
+Route::post('/artistUpload',[ArtistController::class,'ArtistUpload']);
+Route::get('/artistGet',[ArtistController::class,'GetArtistData']);
+Route::put('/update-artist/{id}', [ArtistController::class, 'UpdateArtist']);
+
 });
 
 Route::post('/song',[FileUploadController::class,'UploadSong']);
 Route::delete('/songs/{id}', [FileUploadController::class, 'deleteSong']);
 
 
-Route::post('/artistUpload',[ArtistController::class,'ArtistUpload']);
-Route::get('/artistGet',[ArtistController::class,'GetArtistData']);
-Route::put('/update-artist/{id}', [ArtistController::class, 'UpdateArtist']);
