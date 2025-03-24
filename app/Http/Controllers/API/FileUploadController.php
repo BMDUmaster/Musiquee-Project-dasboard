@@ -75,13 +75,3 @@ class FileUploadController extends Controller
 }
 
 
-
-
-
-
-
-
-
-
-
-

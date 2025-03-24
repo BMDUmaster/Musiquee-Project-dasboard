@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationAPI;
 use App\Http\Controllers\API\FollowController;
 use App\Http\Controllers\API\FileUploadController;
+use App\Http\Controllers\API\NotificationController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,3 +48,6 @@ Route::post('/song',[FileUploadController::class,'UploadSong']);
 Route::delete('/songs/{id}', [FileUploadController::class, 'deleteSong']);
 
 
+
+Route::post('/send-notification', [NotificationController::class, 'sendNotification']);
+Route::get('/notifications/{user_id}', [NotificationController::class, 'getNotifications']);
