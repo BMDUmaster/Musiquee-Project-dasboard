@@ -31,6 +31,7 @@ Route::post('/auth/facebook', [AuthController::class, 'facebookLogin']);
 Route::post('/API/Register',[RegistrationAPI::class,'APIRegister']);
 Route::post('/login', [RegistrationAPI::class, 'loginApi']);
 Route::post('/logout', [RegistrationAPI::class, 'logout'])->middleware('auth:sanctum');
+Route::put('/update', [RegistrationAPI::class, 'editUser'])->middleware('auth:sanctum');
 Route::put('/edit/{id}',[EditController::class,'updateUser']);
 Route::get('/getUser',[FollowController::class,'getUserData'])->middleware('auth:sanctum');
 Route::middleware('/auth:sanctum')->group(function () {
