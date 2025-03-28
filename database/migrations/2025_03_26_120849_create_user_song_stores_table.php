@@ -12,15 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_song_stores', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('userId'); // Foreign Key
-            $table->foreign('userId')->references('user_Id')->on('userregisters')->onDelete('cascade');
-            $table->string('title');
-            $table->string('type');
-            $table->string('file_path');
-            $table->text('content')->nullable();
-            $table->timestamps();
-        });
+
+                $table->id();
+                $table->unsignedBigInteger('user_id'); // Foreign Key
+                $table->string('title');
+                $table->string('artist')->nullable();
+                $table->string('file_path'); // Song File Path
+                $table->text('description')->nullable();
+                $table->timestamps();
+
+                // Foreign Key Constraint
+                $table->foreign('user_id')->references('id')->on('userregisters')->onDelete('cascade');
+            });
     }
 
     /**

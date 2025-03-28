@@ -9,7 +9,22 @@ use Laravel\Sanctum\HasApiTokens;
 
 class userregister extends Model
 {
-    use HasFactory, HasApiTokens,Notifiable;
-    protected $fillable = ['userName','phone','email','bio','socialLinks','profileImage','password',];
-    protected $primaryKey = 'user_Id';
+    use HasApiTokens, HasFactory;
+
+    protected $fillable = [
+        'userName',
+        'phone',
+        'email',
+        'bio',
+        'socialLinks',
+        'role',
+        'profileImage',
+        'password',
+        'status',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

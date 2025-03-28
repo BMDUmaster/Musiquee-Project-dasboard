@@ -57,6 +57,9 @@ class RegistrationAPI extends Controller
 
   }
 
+
+  // login API
+
  public function loginApi(Request $request){
 
     $validate = Validator::make($request->all(),[
@@ -79,7 +82,7 @@ class RegistrationAPI extends Controller
     ], 404);
 }
 
-  if(!$user|| !Hash::check($request->password,$user->password)){
+  if(!$user||!Hash::check($request->password,$user->password)){
     return response()->json(
         [
             'status'=>false,
@@ -98,12 +101,6 @@ class RegistrationAPI extends Controller
     }
 
    //logout api
-
-
-
-
-
-
 public function logout(Request $request)
 {
     $user = Auth::user(); // Sanctum ke through user ko authenticate karenge
@@ -186,6 +183,12 @@ public function editUser(Request $request)
     ], 200);
 }
 
+
+public function UserDataGet(){
+    $UserData = userregister::all();
+    return view('User', compact('UserData'));
+
+}
 
 
 }

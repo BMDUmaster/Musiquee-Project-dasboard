@@ -113,4 +113,7 @@ class ArtistController extends Controller
        ], 200);
    }
 
+
+
+
 }

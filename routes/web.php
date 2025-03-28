@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\RegistrationAPI;
 use App\Http\Controllers\artistController;
 
 use App\Http\Controllers\ProfileController;
@@ -40,10 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/deletepost/{id}',[MusicController::class,'delete'])->name('music.delete');
     Route::get('/music/edit/{id}', [MusicController::class, 'edit'])->name('music.edit');
     Route::post('/music/update/{id}', [MusicController::class, 'update'])->name('music.update');
-    Route::get('/user.Registration',[UserController::class,'UserRegistration'])->name('User.Registration');
-    Route::POST('/user/post',[UserController::class,'UserdataUpload'])->name('User.post');
+
+
     Route::get('/getSong',[SongController::class,'SongOpen'])->name('getSong');
     Route::post('/sendSong',[SongController::class,'SongUpload'])->name('sendSong');
+
+    Route::get('/user.Registration',[RegistrationAPI::class,'UserDataGet'])->name('User.Registration');
+    Route::POST('/user/post',[UserController::class,'UserdataUpload'])->name('User.post');
+
 });
 
 

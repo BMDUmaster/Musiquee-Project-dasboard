@@ -11,10 +11,17 @@
         <div class="user-img"><img src="https://robohash.org/placeholder.png" alt="Admin Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;"></div>
         <span>Admin</span>
         <div class="dropdown-menu">
-            <div class="menu-item">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </div>
+            <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">
+                <div class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </div>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </div>
+
+
     </div>
 </header>

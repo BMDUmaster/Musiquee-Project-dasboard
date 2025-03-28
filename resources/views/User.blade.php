@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
         </span>
         <h2 class=" mb-3 "> User Profile... </h2>
 
-        <div class="form-container" id="userForm">
-            <form action="{{route('User.post')}}" method="POST" enctype="multipart/form-data">
+        {{-- <div class="form-container" id="userForm">
+            <form action="#" >
                 @csrf
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button type="submit" style="background-color: #FF0004" class="btn  w-100">Submit</button>
                 </div>
             </form>
-        </div>
+        </div> --}}
         <div id="userTable">
 
             <table class="table table-striped">
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($getUser as $user)
+                    @foreach($UserData as $user)
                     <tr>
                         <td>{{ $user->Name }}</td>
                         <td>{{ $user->Username }}</td>
