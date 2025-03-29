@@ -67,9 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 @section('content')
 <div class="admin-container">
-
-
-
     <div class="admin-panel">
         <span
         <button class="btn   btn-add  text-white  float-end " style="background-color: #FF0004" onclick="toggleForm()">Add User</button>
